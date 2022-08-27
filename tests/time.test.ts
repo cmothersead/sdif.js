@@ -1,16 +1,4 @@
-import Time from "../time";
-
-test("Accepts 11632 and returns 1:56.32", () => {
-    let time = new Time(11632);
-    expect(time.toString()).toBe("1:56.32");
-});
-
-test("Accepts 5996, minutes = 0, seconds = 59, hundredths = 96", () => {
-    let time = new Time(5996);
-    expect(time.minutes).toBe(0);
-    expect(time.seconds).toBe(59);
-    expect(time.hundredths).toBe(96);
-});
+import Time from "../src/time";
 
 describe("Test Time valid input", () => {
     const expectedMinutes = [0, 1, 2, 20, 59];
