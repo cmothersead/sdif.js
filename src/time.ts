@@ -1,4 +1,8 @@
-export default class Time {
+export class Time {
+    minutes: number;
+    seconds: number;
+    hundredths: number;
+
     constructor(value: number | string) {
         if (typeof value === "number") {
             if (!Number.isSafeInteger(value)) {
@@ -52,9 +56,6 @@ export default class Time {
         }
     }
 
-    minutes: number;
-    seconds: number;
-    hundredths: number;
     value() {
         return this.minutes * 6000 + this.seconds * 100 + this.hundredths;
     }

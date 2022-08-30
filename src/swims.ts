@@ -36,7 +36,8 @@ export class Event {
         stroke: string,
         gender: string,
         minAge: number,
-        maxAge: number
+        maxAge: number,
+        id?: number
     ) {
         if (!Number.isInteger(distance)) {
             throw new Error(`Invalid distance value: "${distance}"`);

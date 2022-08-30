@@ -1,4 +1,4 @@
-import Time from "../src/time";
+import { Time } from "../src/time";
 
 describe("Test Time valid input", () => {
     const expectedMinutes = [0, 1, 2, 20, 59];
