@@ -1,3 +1,5 @@
+export type Gender = "m" | "f";
+
 export class AgeGroup {
     minAge: number;
     maxAge: number;
@@ -26,7 +28,7 @@ export class Event {
     letter: string;
     distance: number;
     stroke: string;
-    gender: "m" | "f";
+    gender: Gender;
     ageGroup: AgeGroup;
 
     constructor(
@@ -34,7 +36,7 @@ export class Event {
         letter: string,
         distance: number,
         stroke: string,
-        gender: string,
+        gender: Gender,
         minAge: number,
         maxAge: number,
         id?: number
@@ -57,5 +59,36 @@ export class Event {
         return `${this.ageGroup} ${this.gender == "f" ? "Girls" : "Boys"} ${
             this.distance
         } ${this.stroke}`;
+    }
+}
+
+export class Swimmer {
+    firstName: string;
+    prefName: string;
+    middleName: string;
+    lastName: string;
+    birthday: Date;
+    gender: Gender;
+
+    constructor(
+        firstName: string,
+        prefName: string,
+        middleName: string,
+        lastName: string,
+        birthday: Date,
+        gender: Gender
+    ) {
+        this.firstName = firstName;
+        this.prefName = prefName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.gender = gender;
+    }
+
+    toString() {
+        return `${this.prefName ? this.prefName : this.firstName} ${
+            this.lastName
+        }`;
     }
 }
