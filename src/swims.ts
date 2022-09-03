@@ -109,3 +109,23 @@ export class Team {
         if (id) this.id = id;
     }
 }
+
+export class Meet {
+    id: number;
+    name: string;
+    class: string;
+    idFormat: string;
+    startDate: Date;
+    endDate: Date;
+    facility: Facility;
+}
+
+export class Facility {
+    id: number;
+    name: string;
+    address1: string;
+    address2: string;
+    city: string;
+    state: string;
+    zipCode: string;
+}
