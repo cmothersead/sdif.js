@@ -63,6 +63,7 @@ export class Event {
 }
 
 export class Swimmer {
+    id: number;
     firstName: string;
     prefName: string;
     middleName: string;
@@ -76,7 +77,8 @@ export class Swimmer {
         middleName: string,
         lastName: string,
         birthday: Date,
-        gender: Gender
+        gender: Gender,
+        id?: number
     ) {
         this.firstName = firstName;
         this.prefName = prefName;
@@ -84,11 +86,26 @@ export class Swimmer {
         this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
+        if (id) this.id = id;
     }
 
     toString() {
         return `${this.prefName ? this.prefName : this.firstName} ${
             this.lastName
         }`;
+    }
+}
+
+export class Team {
+    id: number;
+    name: string;
+    code: string;
+    lsc: string;
+
+    constructor(name: string, code: string, lsc: string, id?: number) {
+        this.name = name;
+        this.code = code;
+        this.lsc = lsc;
+        if (id) this.id = id;
     }
 }
