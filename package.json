@@ -2,6 +2,7 @@
     "name": "sdif",
     "version": "0.0.0",
     "type": "module",
+    "main": "./src",
     "exports": {
         ".": "./dist/index.js"
     },
