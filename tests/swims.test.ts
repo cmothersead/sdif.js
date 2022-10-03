@@ -1,6 +1,7 @@
+import { describe, test, expect } from "vitest";
 import { AgeGroup, Event } from "../src/swims";
 
-describe("Test AgeGroup.toString()", () => {
+describe("AgeGroup.toString()", () => {
     test("10 & Under", () => {
         expect(new AgeGroup(0, 10).toString()).toBe("10 & Under");
     });
@@ -18,22 +19,85 @@ describe("Test AgeGroup.toString()", () => {
     });
 });
 
-describe("Test Event.toString()", () => {
+describe("Event.toString()", () => {
     test("10 & Under Boys 100 Free", () => {
-        expect(new Event(1, "", 100, "Free", "m", 0, 10).toString()).toBe(
-            "10 & Under Boys 100 Free"
-        );
+        expect(
+            new Event({
+                number: 1,
+                letter: "",
+                distance: 100,
+                stroke: "Free",
+                gender: "m",
+                minAge: 0,
+                maxAge: 10,
+            }).toString()
+        ).toBe("10 & Under Boys 100 Free");
     });
 
     test("11-12 Girls 200 IM", () => {
-        expect(new Event(2, "", 200, "IM", "f", 11, 12).toString()).toBe(
-            "11-12 Girls 200 IM"
-        );
+        expect(
+            new Event({
+                number: 2,
+                letter: "",
+                distance: 200,
+                stroke: "IM",
+                gender: "f",
+                minAge: 11,
+                maxAge: 12,
+            }).toString()
+        ).toBe("11-12 Girls 200 IM");
     });
 
     test("15 & Over Boys 100 Breast", () => {
-        expect(new Event(3, "", 100, "Breast", "m", 15, 100).toString()).toBe(
-            "15 & Over Boys 100 Breast"
-        );
+        expect(
+            new Event({
+                number: 3,
+                letter: "",
+                distance: 100,
+                stroke: "Breast",
+                gender: "m",
+                minAge: 15,
+                maxAge: 100,
+            }).toString()
+        ).toBe("15 & Over Boys 100 Breast");
+    });
+});
+
+describe("Event constructor", () => {
+    test("minAge/maxAge parameter", () => {
+        const event = {
+            number: 1,
+            letter: "",
+            distance: 100,
+            stroke: "Free",
+            gender: "m",
+            minAge: 0,
+            maxAge: 12,
+        };
+        expect(new Event(event).ageGroup).toEqual(new AgeGroup(0, 12));
+    });
+
+    test("ageGroup parameter simple object", () => {
+        const event = {
+            number: 1,
+            letter: "",
+            distance: 100,
+            stroke: "Free",
+            gender: "m",
+            ageGroup: { minAge: 0, maxAge: 12 },
+        };
+        expect(new Event(event).ageGroup).toEqual(new AgeGroup(0, 12));
+    });
+
+    test("ageGroup parameter class object", () => {
+        const event = {
+            number: 1,
+            letter: "",
+            distance: 100,
+            stroke: "Free",
+            gender: "m",
+            ageGroup: new AgeGroup(0, 12),
+        };
+        expect(new Event(event).ageGroup).toEqual(new AgeGroup(0, 12));
     });
 });

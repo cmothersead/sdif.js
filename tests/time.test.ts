@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import { Time } from "../src/time";
 
 describe("Test Time valid input", () => {
