@@ -2,12 +2,26 @@ import { describe, test, expect } from "vitest";
 import { Time } from "../src/time";
 
 describe("Test Time valid input", () => {
-    const expectedMinutes = [0, 1, 2, 20, 59];
-    const expectedSeconds = [29, 0, 12, 59, 59];
-    const expectedHundredths = [37, 21, 0, 59, 99];
-    const intInput = [2937, 6021, 13200, 125959, 359999];
-    const strInput = ["29.37", "1:00.21", "2:12.00", "20:59.59", "59:59.99"];
-    const floatInput = [29.37, 60.207, 132.001, 1259.593, 3599.99];
+    const expectedIsNegative = [false, false, false, false, false, true];
+    const expectedMinutes = [0, 1, 2, 20, 59, 0];
+    const expectedSeconds = [29, 0, 12, 59, 59, 13];
+    const expectedHundredths = [37, 21, 0, 59, 99, 1];
+    const intInput = [2937, 6021, 13200, 125959, 359999, -1301];
+    const strInput = [
+        "29.37",
+        "1:00.21",
+        "2:12.00",
+        "20:59.59",
+        "59:59.99",
+        "-13.01",
+    ];
+    const floatInput = [29.37, 60.207, 132.001, 1259.593, 3599.99, -13.01];
+
+    test("Negative int initialization is valid", () => {
+        expect(intInput.map((val) => new Time(val).isNegative)).toEqual(
+            expectedIsNegative
+        );
+    });
 
     test("Minutes int initialization is valid", () => {
         expect(intInput.map((val) => new Time(val).minutes)).toEqual(
@@ -27,6 +41,12 @@ describe("Test Time valid input", () => {
         );
     });
 
+    test("Negative string initialization is valid", () => {
+        expect(strInput.map((val) => new Time(val).isNegative)).toEqual(
+            expectedIsNegative
+        );
+    });
+
     test("Minutes string initialization is valid", () => {
         expect(strInput.map((val) => new Time(val).minutes)).toEqual(
             expectedMinutes
@@ -42,6 +62,12 @@ describe("Test Time valid input", () => {
     test("Hundredths string initialization is valid", () => {
         expect(strInput.map((val) => new Time(val).hundredths)).toEqual(
             expectedHundredths
+        );
+    });
+
+    test("Negative float initialization is valide", () => {
+        expect(floatInput.map((val) => new Time(val).isNegative)).toEqual(
+            expectedIsNegative
         );
     });
 
@@ -99,15 +125,17 @@ describe("Test Time semi-valid input", () => {
         expect(time.seconds).toBe(3);
         expect(time.hundredths).toBe(65);
     });
+
+    test("One digit after colon", () => {
+        let time = new Time("3:3");
+        expect(time.minutes).toBe(3);
+        expect(time.seconds).toBe(3);
+        expect(time.hundredths).toBe(0);
+        expect(time.toString()).toBe("3:03.00");
+    });
 });
 
 describe("Test Time invalid input", () => {
-    test("Not enough digits", () => {
-        expect(() => {
-            new Time("3:3");
-        }).toThrowError(TypeError);
-    });
-
     test("Too many digits after dot", () => {
         expect(() => {
             new Time("1:22.123");
@@ -128,10 +156,10 @@ describe("Test Time invalid input", () => {
 });
 
 describe("Test Time toString()", () => {
-    const expected = ["30.60", "1:00.00", "2:15.11", "NT", "NT"];
-    const intInput = [3060, 6000, 13511, 0, 0];
-    const stringInput = ["30.6", "100", "2:15.11", "0", "NT"];
-    const floatInput = [30.6, 60.001, 135.111, 0.0, 0];
+    const expected = ["30.60", "1:00.00", "2:15.11", "NT", "NT", "-1.20"];
+    const intInput = [3060, 6000, 13511, 0, 0, -120];
+    const stringInput = ["30.6", "100", "2:15.11", "0", "NT", "-1.20"];
+    const floatInput = [30.6, 60.001, 135.111, 0.0, 0, -1.2];
 
     test("Int input toString()", () => {
         expect(intInput.map((val) => new Time(val).toString())).toEqual(

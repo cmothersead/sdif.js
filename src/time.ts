@@ -2,6 +2,7 @@ export class Time {
     minutes: number;
     seconds: number;
     hundredths: number;
+    isNegative: boolean = false;
 
     constructor(value: number | string) {
         if (typeof value === "number") {
@@ -10,12 +11,17 @@ export class Time {
                 value = Math.round(value);
             }
 
+            if (value < 0) {
+                this.isNegative = true;
+                value *= -1;
+            }
+
             this.minutes = Math.floor(value / 6000);
             this.seconds = Math.floor((value % 6000) / 100);
             this.hundredths = value % 100;
         } else if (typeof value === "string") {
             let re =
-                /^(?<minutes>\d*)?:?(?<seconds>\d{2})[\.:]?(?<hundredths>\d{1,2})?$/;
+                /^(?<negative>-)?(?<minutes>\d*(?=:|\d{2}\.|\d{2}$))?:?(?<seconds>\d{1,2})[\.:]?(?<hundredths>\d{1,2})?$/;
             let match = value.match(re);
 
             if (match === null) {
@@ -29,6 +35,11 @@ export class Time {
                         `Invalid value provided to Time object: ${value}`
                     );
                 }
+            }
+
+            let negative = match.groups?.negative;
+            if (negative === "-") {
+                this.isNegative = true;
             }
 
             let minutes = match.groups?.minutes;
@@ -65,7 +76,11 @@ export class Time {
             return "NT";
         } else {
             const minutes = this.minutes > 0 ? `${this.minutes}:` : "";
-            return `${minutes}${String(this.seconds).padStart(2, "0")}.${String(
+            const seconds =
+                minutes != ""
+                    ? String(this.seconds).padStart(2, "0")
+                    : String(this.seconds);
+            return `${this.isNegative ? "-" : ""}${minutes}${seconds}.${String(
                 this.hundredths
             ).padStart(2, "0")}`;
         }
