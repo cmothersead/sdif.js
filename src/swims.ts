@@ -230,6 +230,10 @@ export class Team {
         this.lsc = lsc;
         if (id) this.id = id;
     }
+
+    toString() {
+        return `${this.code}-${this.lsc}`;
+    }
 }
 
 export class Meet {
