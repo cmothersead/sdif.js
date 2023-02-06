@@ -83,6 +83,18 @@ export class AgeGroup {
             return `Open`;
         }
     }
+
+    abbr() {
+        if (this.minAge > 0 && this.maxAge < 100) {
+            return `${this.minAge}-${this.maxAge}`;
+        } else if (this.minAge <= 0 && this.maxAge < 100) {
+            return `${this.maxAge}u`;
+        } else if (this.minAge > 0 && this.maxAge >= 100) {
+            return `${this.minAge}o`;
+        } else {
+            return ``;
+        }
+    }
 }
 
 export type EventLike = {
@@ -92,7 +104,7 @@ export type EventLike = {
     distance: number;
     stroke: string | Stroke;
     gender: Gender;
-    ageGroup?: AgeGroup;
+    ageGroup?: AgeGroup | { minAge: number; maxAge: number };
     minAge?: number;
     maxAge?: number;
 };
