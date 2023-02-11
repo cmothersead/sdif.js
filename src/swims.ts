@@ -223,6 +223,7 @@ export class Team {
     name: string;
     code: string;
     lsc: string;
+    swimmerCount?: number;
 
     constructor({ id, name, code, lsc }: TeamLike) {
         this.name = name;
