@@ -1,13 +1,22 @@
 export { Time } from "./time";
 export {
     Event,
-    EventLike,
+    Session,
     AgeGroup,
     Swimmer,
-    SwimmerLike,
-    Gender,
     Team,
-    TeamLike,
     Meet,
     Facility,
+    Result,
+    Seed,
+    Entry,
 } from "./swims";
+export {
+    MeetData,
+    FacilityData,
+    SessionData,
+    EventData,
+    SwimmerData,
+    MembershipData,
+    TeamData,
+} from "./data";
