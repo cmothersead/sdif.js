@@ -35,10 +35,10 @@ export type SessionData = {
 export type EventData = {
     id?: number;
     number: number;
-    letter: string;
+    letter?: string;
     distance: number;
     stroke: string | Stroke;
-    gender: Gender;
+    gender: string | Gender;
     ageGroup?: AgeGroup | { minAge: number; maxAge: number };
     minAge?: number;
     maxAge?: number;
