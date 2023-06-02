@@ -1,6 +1,7 @@
 import {
     EntryData,
     EventData,
+    FacilityData,
     Gender,
     MeetData,
     ResultData,
@@ -74,6 +75,53 @@ export class Stroke {
     }
 }
 
+const COURSES = {
+    Y: {
+        char: "Y",
+        common: "SCY",
+        full: "Short Course Yards",
+    },
+    S: {
+        char: "S",
+        common: "SCM",
+        full: "Short Course Meters",
+    },
+    L: {
+        char: "L",
+        common: "LCM",
+        full: "Long Course Meters",
+    },
+};
+
+export class Course {
+    char: string;
+    common: string;
+    full: string;
+
+    constructor(value: string | Course) {
+        if (typeof value === "string") {
+            const found = Object.values(COURSES).find((item) => {
+                return Object.values(item).some(
+                    (subItem) => subItem.toUpperCase() === value.toUpperCase()
+                );
+            });
+
+            if (found === undefined)
+                throw new TypeError(
+                    `'${value}' is not a valid stroke identifier.`
+                );
+
+            this.char = found.char;
+            this.common = found.common;
+            this.full = found.full;
+        } else {
+            this.char = STROKES[value.char].abbr;
+            this.common = STROKES[value.char].common;
+            this.full = STROKES[value.char].full;
+        }
+    }
+}
+
 export class AgeGroup {
     minAge: number;
     maxAge: number;
@@ -137,7 +185,7 @@ export class Event {
         if (gender != "m" && gender != "f") {
             throw new Error(`Invalid gender value: "${gender}"`);
         }
-        if (id) this.id = id;
+        if (Number.isInteger(id)) this.id = id;
         this.number = number;
         this.letter = letter;
         this.distance = distance;
@@ -248,6 +296,7 @@ export class Meet {
     idFormat: string;
     startDate: Date;
     endDate: Date;
+    course: Course;
 
     host: Team;
     facility: Facility;
@@ -255,9 +304,9 @@ export class Meet {
     teams?: Team[];
 
     constructor(
-        { id, name, startDate, endDate }: MeetData,
+        { id, name, startDate, endDate, course }: MeetData,
+        host: Team,
         facility: Facility,
-        host?: Team,
         swimmers?: Swimmer[],
         teams?: Team[]
     ) {
@@ -265,7 +314,12 @@ export class Meet {
         this.name = name;
         this.startDate = new Date(startDate);
         this.endDate = new Date(endDate);
+        this.course = new Course(course);
+
+        this.host = host;
         this.facility = facility;
+        this.swimmers = swimmers;
+        this.teams = teams;
     }
 }
 
@@ -273,10 +327,28 @@ export class Facility {
     id: number;
     name: string;
     address1: string;
-    address2: string;
+    address2?: string;
     city: string;
     state: string;
     zipCode: string;
+
+    constructor({
+        id,
+        name,
+        address1,
+        address2,
+        city,
+        state,
+        zipCode,
+    }: FacilityData) {
+        this.id = id;
+        this.name = name;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
 }
 
 export class Entry {

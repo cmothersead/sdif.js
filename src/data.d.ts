@@ -1,26 +1,28 @@
 import { AgeGroup, Stroke } from "./swims";
 
 export type Gender = "m" | "f";
+export type CourseChar = "y" | "s" | "m";
 
 export type MeetData = {
     id: number;
     host: number;
     name: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: string | Date;
+    endDate: string | Date;
+    course: string | CourseChar;
 
-    facility: number;
-    sessions: number[];
+    facility?: number;
+    sessions?: number[];
 };
 
 export type FacilityData = {
     id: number;
     name: string;
     address1: string;
-    address2: string;
+    address2?: string;
     city: string;
     state: string;
-    zip: string;
+    zipCode: string;
 };
 
 export type SessionData = {
