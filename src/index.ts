@@ -12,6 +12,7 @@ export {
     Entry,
 } from "./swims";
 export {
+    Gender,
     MeetData,
     FacilityData,
     SessionData,

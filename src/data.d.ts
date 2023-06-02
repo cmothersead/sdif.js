@@ -29,9 +29,9 @@ export type SessionData = {
     id: number;
     meet: number;
     name: string;
-    startTime: Date;
+    startTime: string | Date;
 
-    events: number[];
+    events?: number[];
 };
 
 export type EventData = {

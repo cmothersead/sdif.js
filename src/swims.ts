@@ -221,7 +221,11 @@ export class Session {
         this.id = id;
         this.name = name;
         this.startTime = new Date(startTime);
-        if (events) this.events = events;
+        if (events) {
+            this.events = events;
+        } else {
+            this.events = [];
+        }
         if (meet) this.meet = meet;
     }
 }
