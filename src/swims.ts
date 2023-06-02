@@ -120,6 +120,10 @@ export class Course {
             this.full = STROKES[value.char].full;
         }
     }
+
+    toString() {
+        return this.common;
+    }
 }
 
 export class AgeGroup {
