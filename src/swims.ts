@@ -199,7 +199,7 @@ export class Event {
     }
 
     toString() {
-        return `${this.ageGroup} ${this.gender == "f" ? "Girls" : "Boys"} ${
+        return `${this.gender == "f" ? "Girls" : "Boys"} ${this.ageGroup} ${
             this.distance
         } ${this.stroke.common}`;
     }
