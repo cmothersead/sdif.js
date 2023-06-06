@@ -50,11 +50,11 @@ export type SwimmerData = {
     id: number;
     firstName: string;
     prefName?: string;
-    middleName: string;
+    middleName?: string;
     lastName: string;
     gender: Gender;
-    birthday: Date;
-    memberships: MembershipData[];
+    birthday: string | Date;
+    memberships?: MembershipData[];
 };
 
 export type MembershipData = {

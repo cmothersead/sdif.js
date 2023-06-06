@@ -233,8 +233,8 @@ export class Session {
 export class Swimmer {
     id: number;
     firstName: string;
-    prefName: string;
-    middleName: string;
+    prefName?: string;
+    middleName?: string;
     lastName: string;
     birthday: Date;
     gender: Gender;
@@ -255,12 +255,12 @@ export class Swimmer {
         ageDate?: Date
     ) {
         this.firstName = firstName;
-        this.prefName = prefName;
-        this.middleName = middleName;
         this.lastName = lastName;
         this.birthday = new Date(birthday);
         this.gender = gender;
-        if (id) this.id = id;
+        if (prefName) this.prefName = prefName;
+        if (middleName) this.middleName = middleName;
+        if (Number.isSafeInteger(id)) this.id = id;
         if (team) this.team = team;
         if (ageDate) this.age = this.ageOn(ageDate);
         else this.age = this.ageOn(new Date());
@@ -289,7 +289,7 @@ export class Team {
         this.name = name;
         this.code = code;
         this.lsc = lsc;
-        if (id) this.id = id;
+        if (Number.isSafeInteger(id)) this.id = id;
     }
 
     toString() {
