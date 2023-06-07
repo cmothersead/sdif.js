@@ -75,32 +75,32 @@ export type TeamData = {
 
 export type EntryData = {
     id: number;
-
     swimmer: number;
     event: number;
-    seeds: number[];
+
+    seeds?: number[];
 };
 
 export type SeedData = {
     id: number;
     round: string;
     time: number;
-    heat: number;
-    lane: number;
 
-    entry: number;
-    result: number;
+    heat?: number;
+    lane?: number;
+    entry?: number;
+    result?: number;
 };
 
 export type ResultData = {
     id: number;
-    round: string;
     time: number;
     place: number;
     points: number;
-    improvement: number;
-    dq: boolean;
 
-    event: number;
-    seed: number;
+    improvement?: number;
+    dq?: boolean;
+    round?: string;
+    event?: number;
+    seed?: number;
 };

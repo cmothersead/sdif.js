@@ -252,7 +252,7 @@ export class Swimmer {
             gender,
         }: SwimmerData,
         team?: Team,
-        ageDate?: Date
+        ageDate?: Date | string
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -272,7 +272,7 @@ export class Swimmer {
         }`;
     }
 
-    ageOn(date: Date) {
+    ageOn(date: Date | string) {
         const dif = new Date(date).getTime() - this.birthday.getTime();
         return Math.abs(new Date(dif).getUTCFullYear() - 1970);
     }
@@ -369,12 +369,12 @@ export class Entry {
         { id }: EntryData,
         swimmer: Swimmer,
         event: Event,
-        seeds: Seed[]
+        seeds?: Seed[]
     ) {
         this.id = id;
         this.swimmer = swimmer;
         this.event = event;
-        this.seeds = seeds;
+        if (seeds) this.seeds = seeds;
     }
 }
 
@@ -383,7 +383,7 @@ export class Seed {
     event: Event;
     swimmer: Swimmer;
     round: string;
-    time: number;
+    time: Time;
     heat: number;
     lane: number;
     place: number;
@@ -397,9 +397,9 @@ export class Seed {
         this.event = entry.event;
         this.swimmer = entry.swimmer;
         this.round = round;
-        this.time = time;
-        this.heat = heat;
-        this.lane = lane;
+        this.time = new Time(time);
+        if (heat) this.heat = heat;
+        if (lane) this.lane = lane;
         if (result) this.place = result.place;
     }
 }
@@ -417,7 +417,7 @@ export class Result {
     dq: boolean;
 
     constructor(
-        { id, round, time, place, points, improvement, dq }: ResultData,
+        { id, time, place, points, dq }: ResultData,
         swimmer: Swimmer,
         event: Event,
         seed: Seed
@@ -426,9 +426,9 @@ export class Result {
         this.event = event;
         this.seed = seed;
         this.swimmer = swimmer;
-        this.round = round;
+        this.round = seed.round;
         this.time = new Time(time);
-        this.improvement = new Time(improvement);
+        this.improvement = new Time(time - seed.time.value());
         this.place = place;
         this.points = points;
         this.dq = dq;
