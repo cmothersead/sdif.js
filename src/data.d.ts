@@ -4,19 +4,17 @@ export type Gender = "m" | "f";
 export type CourseChar = "y" | "s" | "m";
 
 export type MeetData = {
-    id: number;
+    id?: number;
     host: number;
+    facility: number;
     name: string;
     startDate: string | Date;
     endDate: string | Date;
     course: string | CourseChar;
-
-    facility?: number;
-    sessions?: number[];
 };
 
 export type FacilityData = {
-    id: number;
+    id?: number;
     name: string;
     address1: string;
     address2?: string;
@@ -47,7 +45,7 @@ export type EventData = {
 };
 
 export type SwimmerData = {
-    id: number;
+    id?: number;
     firstName: string;
     prefName?: string;
     middleName?: string;
