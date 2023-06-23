@@ -4,7 +4,7 @@ export type Gender = "m" | "f";
 export type CourseChar = "y" | "s" | "m";
 
 export type MeetData = {
-    id?: number;
+    id: number;
     host: number;
     facility: number;
     name: string;
@@ -14,7 +14,7 @@ export type MeetData = {
 };
 
 export type FacilityData = {
-    id?: number;
+    id: number;
     name: string;
     address1: string;
     address2?: string;
@@ -33,7 +33,7 @@ export type SessionData = {
 };
 
 export type EventData = {
-    id?: number;
+    id: number;
     number: number;
     letter?: string;
     distance: number;
@@ -45,7 +45,7 @@ export type EventData = {
 };
 
 export type SwimmerData = {
-    id?: number;
+    id: number;
     firstName: string;
     prefName?: string;
     middleName?: string;
@@ -65,7 +65,7 @@ export type MembershipData = {
 };
 
 export type TeamData = {
-    id?: number;
+    id: number;
     name: string;
     code: string;
     lsc: string;

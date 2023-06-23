@@ -163,7 +163,7 @@ export class AgeGroup {
 export class Event {
     id: number;
     number: number;
-    letter: string;
+    letter?: string;
     distance: number;
     stroke: Stroke;
     gender: Gender;

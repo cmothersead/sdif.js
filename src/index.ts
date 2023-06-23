@@ -20,4 +20,7 @@ export {
     SwimmerData,
     MembershipData,
     TeamData,
+    ResultData,
+    SeedData,
+    EntryData,
 } from "./data";
