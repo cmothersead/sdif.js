@@ -2,6 +2,7 @@ import { AgeGroup, Stroke } from "./swims";
 
 export type Gender = "m" | "f";
 export type CourseChar = "y" | "s" | "m";
+export type RoundTypeChar = "p" | "s" | "f" | "o" | "t";
 
 export type MeetData = {
     id: number;
@@ -28,8 +29,6 @@ export type SessionData = {
     meet: number;
     name: string;
     startTime: string | Date;
-
-    events?: number[];
 };
 
 export type EventData = {
@@ -39,9 +38,15 @@ export type EventData = {
     distance: number;
     stroke: string | Stroke;
     gender: string | Gender;
-    ageGroup?: AgeGroup | { minAge: number; maxAge: number };
-    minAge?: number;
-    maxAge?: number;
+    minAge: number;
+    maxAge: number;
+};
+
+export type EventRoundData = {
+    id: number;
+    event: number;
+    session: number;
+    type: RoundTypeChar;
 };
 
 export type SwimmerData = {
@@ -52,7 +57,6 @@ export type SwimmerData = {
     lastName: string;
     gender: Gender;
     birthday: string | Date;
-    memberships?: MembershipData[];
 };
 
 export type MembershipData = {
@@ -74,31 +78,20 @@ export type TeamData = {
 export type EntryData = {
     id: number;
     swimmer: number;
-    event: number;
-
-    seeds?: number[];
-};
-
-export type SeedData = {
-    id: number;
-    round: string;
+    round: number;
     time: number;
 
     heat?: number;
     lane?: number;
-    entry?: number;
-    result?: number;
 };
 
 export type ResultData = {
     id: number;
+    entry: number;
     time: number;
     place: number;
     points: number;
 
     improvement?: number;
     dq?: boolean;
-    round?: string;
-    event?: number;
-    seed?: number;
 };

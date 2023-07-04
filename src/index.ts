@@ -23,4 +23,5 @@ export {
     ResultData,
     SeedData,
     EntryData,
+    EventRoundData,
 } from "./data";
