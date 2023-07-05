@@ -5,7 +5,8 @@ import {
     Gender,
     MeetData,
     ResultData,
-    SeedData,
+    RoundData,
+    RoundTypeChar,
     SessionData,
     SwimmerData,
     TeamData,
@@ -176,10 +177,6 @@ export class Event {
         distance,
         stroke,
         gender,
-        ageGroup: { minAge: agMinAge, maxAge: agMaxAge } = {
-            minAge: undefined,
-            maxAge: undefined,
-        },
         minAge,
         maxAge,
     }: EventData) {
@@ -195,7 +192,7 @@ export class Event {
         this.distance = distance;
         this.stroke = new Stroke(stroke);
         this.gender = gender;
-        this.ageGroup = new AgeGroup(minAge ?? agMinAge, maxAge ?? agMaxAge);
+        this.ageGroup = new AgeGroup(minAge, maxAge);
     }
 
     toString() {
@@ -359,56 +356,46 @@ export class Facility {
     }
 }
 
-export class Entry {
+export class Round {
     id: number;
-    swimmer: Swimmer;
+    type: RoundTypeChar;
+    startTime: Date;
+
     event: Event;
-    seeds: Seed[];
+    session: Session;
 
     constructor(
-        { id }: EntryData,
-        swimmer: Swimmer,
+        { id, type, startTime }: RoundData,
         event: Event,
-        seeds?: Seed[]
+        session: Session
     ) {
         this.id = id;
-        this.swimmer = swimmer;
+        this.type = type;
+        this.startTime = new Date(startTime);
         this.event = event;
-        if (seeds) this.seeds = seeds;
+        this.session = session;
     }
 }
 
-export class Seed {
+export class Entry {
     id: number;
-    event: Event;
     swimmer: Swimmer;
-    round: string;
+    round: Round;
     time: Time;
-    heat: number;
-    lane: number;
-    place: number;
 
-    constructor(
-        { id, round, time, heat, lane }: SeedData,
-        entry: Entry,
-        result?: Result
-    ) {
+    constructor({ id, time }: EntryData, swimmer: Swimmer, round: Round) {
         this.id = id;
-        this.event = entry.event;
-        this.swimmer = entry.swimmer;
+        this.swimmer = swimmer;
         this.round = round;
         this.time = new Time(time);
-        if (heat) this.heat = heat;
-        if (lane) this.lane = lane;
-        if (result) this.place = result.place;
     }
 }
 
 export class Result {
     id: number;
     event: Event;
+    entry: Entry;
     swimmer: Swimmer;
-    seed: Seed;
     round: string;
     time: Time;
     improvement: Time;
@@ -420,15 +407,14 @@ export class Result {
         { id, time, place, points, dq }: ResultData,
         swimmer: Swimmer,
         event: Event,
-        seed: Seed
+        entry: Entry
     ) {
         this.id = id;
         this.event = event;
-        this.seed = seed;
+        this.entry = entry;
         this.swimmer = swimmer;
-        this.round = seed.round;
         this.time = new Time(time);
-        this.improvement = new Time(time - seed.time.value());
+        this.improvement = new Time(time - entry.time.value());
         this.place = place;
         this.points = points;
         this.dq = dq;

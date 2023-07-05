@@ -8,8 +8,8 @@ export {
     Meet,
     Facility,
     Result,
-    Seed,
     Entry,
+    Round,
 } from "./swims";
 export {
     Gender,
@@ -21,7 +21,6 @@ export {
     MembershipData,
     TeamData,
     ResultData,
-    SeedData,
     EntryData,
-    EventRoundData,
+    RoundData,
 } from "./data";

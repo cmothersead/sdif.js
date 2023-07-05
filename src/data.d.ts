@@ -1,4 +1,4 @@
-import { AgeGroup, Stroke } from "./swims";
+import { Stroke } from "./swims";
 
 export type Gender = "m" | "f";
 export type CourseChar = "y" | "s" | "m";
@@ -24,6 +24,31 @@ export type FacilityData = {
     zipCode: string;
 };
 
+export type SwimmerData = {
+    id: number;
+    firstName: string;
+    prefName?: string;
+    middleName?: string;
+    lastName: string;
+    gender: Gender;
+    birthday: string | Date;
+};
+
+export type MembershipData = {
+    id: number;
+    startDate: Date;
+    endDate?: Date;
+    team: number;
+    swimmer: number;
+};
+
+export type TeamData = {
+    id: number;
+    name: string;
+    code: string;
+    lsc: string;
+};
+
 export type SessionData = {
     id: number;
     meet: number;
@@ -42,37 +67,12 @@ export type EventData = {
     maxAge: number;
 };
 
-export type EventRoundData = {
+export type RoundData = {
     id: number;
     event: number;
     session: number;
     type: RoundTypeChar;
-};
-
-export type SwimmerData = {
-    id: number;
-    firstName: string;
-    prefName?: string;
-    middleName?: string;
-    lastName: string;
-    gender: Gender;
-    birthday: string | Date;
-};
-
-export type MembershipData = {
-    id: number;
-    startDate: Date;
-    endDate?: Date;
-
-    team: number;
-    swimmer: number;
-};
-
-export type TeamData = {
-    id: number;
-    name: string;
-    code: string;
-    lsc: string;
+    startTime?: string | Date;
 };
 
 export type EntryData = {
