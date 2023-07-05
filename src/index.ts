@@ -13,6 +13,7 @@ export {
 } from "./swims";
 export {
     Gender,
+    RoundTypeChar,
     MeetData,
     FacilityData,
     SessionData,

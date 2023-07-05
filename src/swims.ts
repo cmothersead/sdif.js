@@ -396,7 +396,7 @@ export class Result {
     event: Event;
     entry: Entry;
     swimmer: Swimmer;
-    round: string;
+    round: RoundTypeChar;
     time: Time;
     improvement: Time;
     place: number;
@@ -418,5 +418,6 @@ export class Result {
         this.place = place;
         this.points = points;
         this.dq = dq;
+        this.round = entry.round.type;
     }
 }
