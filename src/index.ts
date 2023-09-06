@@ -1,4 +1,4 @@
-export { Time } from "./time";
+export { Time } from "./time.js";
 export {
     Event,
     Session,
@@ -10,7 +10,7 @@ export {
     Result,
     Entry,
     Round,
-} from "./swims";
+} from "./swims.js";
 export {
     Gender,
     RoundTypeChar,

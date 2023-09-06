@@ -11,7 +11,7 @@ import {
     SwimmerData,
     TeamData,
 } from "./data";
-import { Time } from "./time";
+import { Time } from "./time.js";
 
 const STROKES: {
     [key: string]: { abbr: string; common: string; full: string };
