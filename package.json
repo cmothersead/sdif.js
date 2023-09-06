@@ -5,7 +5,7 @@
     "type": "module",
     "main": "./dist/index.js",
     "exports": {
-        ".": "./dist"
+        ".": "./dist",
         "./time": "./dist/time.js",
         "./swims": "./dist/swims.js",
     },
