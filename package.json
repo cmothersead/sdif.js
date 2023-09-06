@@ -12,7 +12,8 @@
     "scripts": {
         "build": "tsc",
         "dev": "nodemon",
-        "test": "vitest"
+        "test": "vitest run",
+        "dev test": "vitest"
     },
     "devDependencies": {
         "@babel/preset-typescript": "^7.18.6",
