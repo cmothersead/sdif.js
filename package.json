@@ -1,5 +1,5 @@
 {
-    "name": "sdif",
+    "name": "swim-tools",
     "version": "0.0.0",
     "type": "module",
     "main": "./src",
