@@ -1,6 +1,6 @@
 {
     "name": "swim-tools",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "author": "Colin Mothersead",
     "type": "module",
     "main": "./dist/index.js",
