@@ -8,6 +8,10 @@
         ".": "./dist/index.js",
         "./*": "./dist/*.js"
     },
+    "imports": {
+        ".": "./dist/index.js",
+        "./*": "./dist/*.js"
+    },
     "engines": {
         "node": "*"
     },
