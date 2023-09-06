@@ -7,7 +7,7 @@
     "exports": {
         ".": "./dist",
         "./time": "./dist/time.js",
-        "./swims": "./dist/swims.js",
+        "./swims": "./dist/swims.js"
     },
     "engines": {
         "node": ">=16.0.0"
