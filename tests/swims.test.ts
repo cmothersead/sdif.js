@@ -31,7 +31,7 @@ describe("Event.toString()", () => {
                 minAge: 0,
                 maxAge: 10,
             }).toString()
-        ).toBe("10 & Under Boys 100 Free");
+        ).toBe("Boys 10 & Under 100 Free");
     });
 
     test("11-12 Girls 200 IM", () => {
@@ -45,7 +45,7 @@ describe("Event.toString()", () => {
                 minAge: 11,
                 maxAge: 12,
             }).toString()
-        ).toBe("11-12 Girls 200 IM");
+        ).toBe("Girls 11-12 200 IM");
     });
 
     test("15 & Over Boys 100 Breast", () => {
@@ -59,7 +59,7 @@ describe("Event.toString()", () => {
                 minAge: 15,
                 maxAge: 100,
             }).toString()
-        ).toBe("15 & Over Boys 100 Breast");
+        ).toBe("Boys 15 & Over 100 Breast");
     });
 });
 
@@ -84,19 +84,8 @@ describe("Event constructor", () => {
             distance: 100,
             stroke: "Free",
             gender: "m",
-            ageGroup: { minAge: 0, maxAge: 12 },
-        };
-        expect(new Event(event).ageGroup).toEqual(new AgeGroup(0, 12));
-    });
-
-    test("ageGroup parameter class object", () => {
-        const event = {
-            number: 1,
-            letter: "",
-            distance: 100,
-            stroke: "Free",
-            gender: "m",
-            ageGroup: new AgeGroup(0, 12),
+            minAge: 0, 
+            maxAge: 12,
         };
         expect(new Event(event).ageGroup).toEqual(new AgeGroup(0, 12));
     });
