@@ -2,9 +2,12 @@
     "name": "swim-tools",
     "version": "0.0.0",
     "type": "module",
-    "main": "./src",
+    "main": "./dist/index.js",
     "exports": {
         ".": "./dist/index.js"
+    },
+    "engines": {
+      "node": ">=16.0.0"
     },
     "scripts": {
         "build": "tsc",
