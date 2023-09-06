@@ -5,12 +5,11 @@
     "type": "module",
     "main": "./dist/index.js",
     "exports": {
-        ".": "./dist",
-        "./time": "./dist/time.js",
-        "./swims": "./dist/swims.js"
+        ".": "./dist/index.js",
+        "./*": "./dist/*.js"
     },
     "engines": {
-        "node": ">=16.0.0"
+        "node": "*"
     },
     "scripts": {
         "build": "tsc",
