@@ -149,4 +149,12 @@ export class Score {
   regex() {
     return /^(?<whole>\d{2,3})[\.]?(?<hundredths>\d{1,2})?$/;
   }
+
+  toString() {
+    if (this.value === undefined || this.value === 0) {
+      return "NS"
+    } else {
+      `${this.value.toString().slice(0, -2)}.${this.value.toString().slice(-2)}`
+    }
+  }
 }
