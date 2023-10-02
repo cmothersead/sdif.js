@@ -154,7 +154,7 @@ export class Score {
     if (this.value === undefined || this.value === 0) {
       return "NS"
     } else {
-      `${this.value.toString().slice(0, -2)}.${this.value.toString().slice(-2)}`
+      return `${this.value.toString().slice(0, -2)}.${this.value.toString().slice(-2)}`
     }
   }
 }
