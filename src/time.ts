@@ -102,7 +102,7 @@ export class Time {
 }
 
 export class Score {
-  value: number;
+  _val: number;
 
   constructor(value: number | string) {
     if (typeof value === 'number') {
@@ -112,13 +112,13 @@ export class Score {
         value = Math.round(value);
       }
 
-      this.value = value;
+      this._val = value;
     } else if (typeof value === 'string') {
       const match = value.match(this.regex());
 
       if (match === null) {
         if (parseInt(value) === 0) {
-          this.value = 0;
+          this._val = 0;
           return;
         } else {
           throw new TypeError(`Invalid value provided to Score object: ${value}`);
@@ -126,19 +126,21 @@ export class Score {
       }
 
       let whole = match.groups?.whole;
+      console.log({ whole });
       if (whole === undefined || whole === "") {
-        this.value = 0;
+        this._val = 0;
       } else {
-        this.value = parseInt(whole);
+        this._val = parseInt(whole) * 100;
       }
 
       let hundredths = match.groups?.hundredths;
+      console.log({ hundredths });
       if (hundredths === undefined || hundredths === "") {
         return;
       } else if (hundredths.length === 1) {
-        this.value += parseInt(hundredths) * 10;
+        this._val += parseInt(hundredths) * 10;
       } else {
-        this.value += parseInt(hundredths);
+        this._val += parseInt(hundredths);
       }
 
     } else {
@@ -150,11 +152,19 @@ export class Score {
     return /^(?<whole>\d{2,3})[\.]?(?<hundredths>\d{1,2})?$/;
   }
 
+  value() {
+    return this._val
+  }
+
+  sortValue() {
+    return this._val;
+  }
+
   toString() {
-    if (this.value === undefined || this.value === 0) {
-      return "NS"
+    if (this._val === undefined || this._val === 0) {
+      return "NP"
     } else {
-      return `${this.value.toString().slice(0, -2)}.${this.value.toString().slice(-2)}`
+      return `${this._val.toString().slice(0, -2)}.${this._val.toString().slice(-2)}`
     }
   }
 }
