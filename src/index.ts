@@ -10,6 +10,7 @@ export {
   Result,
   Entry,
   Round,
+  Stroke
 } from "./swims.js";
 export {
   Gender,
