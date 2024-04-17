@@ -48,7 +48,7 @@ export class Stroke {
     common: string;
     full: string;
 
-    constructor(value: string | Stroke) {
+    constructor(value: string | Stroke, isRelay?: boolean) {
         if (typeof value === "string") {
             const found = Object.values(STROKES).find((item) => {
                 return Object.values(item).some(
@@ -60,6 +60,12 @@ export class Stroke {
                 throw new TypeError(
                     `'${value}' is not a valid stroke identifier.`
                 );
+
+            if (isRelay && found.abbr === "IM") {
+                this.abbr = "MR";
+                this.common = "Medley";
+                this.common = "Medley";
+            }
 
             this.abbr = found.abbr;
             this.common = found.common;
