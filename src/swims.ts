@@ -162,7 +162,7 @@ export class AgeGroup {
         } else if (this.minAge > 0 && this.maxAge >= 100) {
             return `${this.minAge}o`;
         } else {
-            return ``;
+            return `open`;
         }
     }
 }
