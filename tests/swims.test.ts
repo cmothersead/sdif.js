@@ -30,6 +30,7 @@ describe("Event.toString()", () => {
                 gender: "m",
                 minAge: 0,
                 maxAge: 10,
+                isRelay: false,
             }).toString()
         ).toBe("Boys 10 & Under 100 Free");
     });
@@ -44,8 +45,56 @@ describe("Event.toString()", () => {
                 gender: "f",
                 minAge: 11,
                 maxAge: 12,
+                isRelay: false,
             }).toString()
         ).toBe("Girls 11-12 200 IM");
+    });
+
+    test("11-12 Girls 200 Medley Relay", () => {
+        expect(
+            new Event({
+                number: 2,
+                letter: "",
+                distance: 200,
+                stroke: "MD",
+                gender: "f",
+                minAge: 11,
+                maxAge: 12,
+                isRelay: true,
+            }).toString()
+        ).toBe("Girls 11-12 200 Medley Relay");
+    });
+
+    test("Invalid stroke identifier", () => {
+        expect(() =>
+            new Event({
+                number: 2,
+                letter: "",
+                distance: 200,
+                stroke: "ID",
+                gender: "f",
+                minAge: 11,
+                maxAge: 12,
+                isRelay: true,
+            }).toString()
+        ).toThrowError("'ID' is not a valid stroke identifier.");
+    });
+
+    test("Relay marked as IM", () => {
+        expect(() =>
+            new Event({
+                number: 2,
+                letter: "",
+                distance: 200,
+                stroke: "IM",
+                gender: "f",
+                minAge: 11,
+                maxAge: 12,
+                isRelay: true,
+            }).toString()
+        ).toThrowError(
+            "'IM' is not a valid stroke identifier for an event marked as a RELAY event."
+        );
     });
 
     test("15 & Over Boys 100 Breast", () => {
@@ -58,6 +107,7 @@ describe("Event.toString()", () => {
                 gender: "m",
                 minAge: 15,
                 maxAge: 100,
+                isRelay: false,
             }).toString()
         ).toBe("Boys 15 & Over 100 Breast");
     });
@@ -73,6 +123,7 @@ describe("Event constructor", () => {
             gender: "m",
             minAge: 0,
             maxAge: 12,
+            isRelay: false,
         };
         expect(new Event(event).ageGroup).toEqual(new AgeGroup(0, 12));
     });
@@ -84,8 +135,9 @@ describe("Event constructor", () => {
             distance: 100,
             stroke: "Free",
             gender: "m",
-            minAge: 0, 
+            minAge: 0,
             maxAge: 12,
+            isRelay: false,
         };
         expect(new Event(event).ageGroup).toEqual(new AgeGroup(0, 12));
     });

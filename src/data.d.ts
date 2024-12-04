@@ -57,7 +57,7 @@ export type SessionData = {
 };
 
 export type EventData = {
-    id: number;
+    id?: number;
     number: number;
     letter?: string;
     distance: number;
@@ -65,6 +65,7 @@ export type EventData = {
     gender: string | Gender;
     minAge: number;
     maxAge: number;
+    isRelay: boolean;
 };
 
 export type RoundData = {

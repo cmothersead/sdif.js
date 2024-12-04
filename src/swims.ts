@@ -13,35 +13,68 @@ import {
 } from "./data";
 import { Time } from "./time.js";
 
-const STROKES: {
-    [key: string]: { abbr: string; common: string; full: string };
-} = {
+const STROKES = {
     BK: {
-        abbr: "BK",
-        common: "Back",
-        full: "Backstroke",
+        individual: {
+            abbr: "BK",
+            common: "Back",
+            full: "Backstroke",
+        },
+        relay: {
+            abbr: "BK-R",
+            common: "Back Relay",
+            full: "Backstroke Relay",
+        },
     },
     BR: {
-        abbr: "BR",
-        common: "Breast",
-        full: "Breaststroke",
+        individual: {
+            abbr: "BR",
+            common: "Breast",
+            full: "Breaststroke",
+        },
+        relay: {
+            abbr: "BR-R",
+            common: "Breast Relay",
+            full: "Breaststroke Relay",
+        },
     },
     FL: {
-        abbr: "FL",
-        common: "Fly",
-        full: "Butterfly",
+        individual: {
+            abbr: "FL",
+            common: "Fly",
+            full: "Butterfly",
+        },
+        relay: {
+            abbr: "FL-R",
+            common: "Fly Relay",
+            full: "Butterfly Relay",
+        },
     },
     FR: {
-        abbr: "FR",
-        common: "Free",
-        full: "Freestyle",
+        individual: {
+            abbr: "FR",
+            common: "Free",
+            full: "Freestyle",
+        },
+        relay: {
+            abbr: "FR-R",
+            common: "Free Relay",
+            full: "Freestyle Relay",
+        },
     },
-    IM: {
-        abbr: "IM",
-        common: "IM",
-        full: "Individual Medley",
+    MD: {
+        individual: {
+            abbr: "IM",
+            common: "IM",
+            full: "Individual Medley",
+        },
+        relay: {
+            abbr: "MD-R",
+            common: "Medley Relay",
+            full: "Medley Relay",
+        },
     },
-};
+} as const;
 
 export class Stroke {
     abbr: string;
@@ -50,30 +83,50 @@ export class Stroke {
 
     constructor(value: string | Stroke, isRelay?: boolean) {
         if (typeof value === "string") {
-            const found = Object.values(STROKES).find((item) => {
-                return Object.values(item).some(
-                    (subItem) => subItem.toUpperCase() === value.toUpperCase()
-                );
-            });
+            const found = Object.hasOwn(STROKES, value.toUpperCase())
+                ? STROKES[value.toUpperCase()][isRelay ? "relay" : "individual"]
+                : Object.values(STROKES).find((item) =>
+                      Object.values(
+                          isRelay ? item.relay : item.individual
+                      ).some(
+                          (subItem) =>
+                              subItem.toUpperCase() === value.toUpperCase()
+                      )
+                  )?.[isRelay ? "relay" : "individual"];
 
-            if (found === undefined)
+            if (found === undefined) {
+                if (
+                    Object.values(STROKES).find((item) =>
+                        Object.values(
+                            isRelay ? item.individual : item.relay
+                        ).some(
+                            (subItem) =>
+                                subItem.toUpperCase() === value.toUpperCase()
+                        )
+                    )
+                ) {
+                    throw new TypeError(
+                        `'${value}' is not a valid stroke identifier for an event marked as a${
+                            isRelay ? "" : "n"
+                        } ${isRelay ? "RELAY" : "INDIVIDUAL"} event.`
+                    );
+                }
+
                 throw new TypeError(
                     `'${value}' is not a valid stroke identifier.`
                 );
-
-            if (isRelay && found.abbr === "IM") {
-                this.abbr = "MR";
-                this.common = "Medley";
-                this.common = "Medley";
             }
 
             this.abbr = found.abbr;
             this.common = found.common;
             this.full = found.full;
         } else {
-            this.abbr = STROKES[value.abbr].abbr;
-            this.common = STROKES[value.abbr].common;
-            this.full = STROKES[value.abbr].full;
+            this.abbr =
+                STROKES[value.abbr][isRelay ? "relay" : "individual"].abbr;
+            this.common =
+                STROKES[value.abbr][isRelay ? "relay" : "individual"].common;
+            this.full =
+                STROKES[value.abbr][isRelay ? "relay" : "individual"].full;
         }
     }
 
@@ -168,13 +221,14 @@ export class AgeGroup {
 }
 
 export class Event {
-    id: number;
+    id?: number;
     number: number;
     letter?: string;
     distance: number;
     stroke: Stroke;
     gender: Gender;
     ageGroup: AgeGroup;
+    isRelay: boolean;
 
     constructor({
         id,
@@ -185,6 +239,7 @@ export class Event {
         gender,
         minAge,
         maxAge,
+        isRelay,
     }: EventData) {
         if (!Number.isInteger(distance)) {
             throw new Error(`Invalid distance value: "${distance}"`);
@@ -196,9 +251,10 @@ export class Event {
         this.number = number;
         this.letter = letter;
         this.distance = distance;
-        this.stroke = new Stroke(stroke);
+        this.stroke = new Stroke(stroke, isRelay);
         this.gender = gender;
         this.ageGroup = new AgeGroup(minAge, maxAge);
+        this.isRelay = isRelay;
     }
 
     toString() {
