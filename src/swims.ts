@@ -244,7 +244,8 @@ export class Event {
         if (!Number.isInteger(distance)) {
             throw new Error(`Invalid distance value: "${distance}"`);
         }
-        if (gender != "m" && gender != "f") {
+        const genders = ["m", "f", "x"] as const;
+        if (!genders.some((val) => gender.toLowerCase() === val)) {
             throw new Error(`Invalid gender value: "${gender}"`);
         }
         if (Number.isInteger(id)) this.id = id;
@@ -252,15 +253,19 @@ export class Event {
         this.letter = letter;
         this.distance = distance;
         this.stroke = new Stroke(stroke, isRelay);
-        this.gender = gender;
+        this.gender = gender.toLowerCase() as (typeof genders)[number];
         this.ageGroup = new AgeGroup(minAge, maxAge);
         this.isRelay = isRelay;
     }
 
     toString() {
-        return `${this.gender == "f" ? "Girls" : "Boys"} ${this.ageGroup} ${
-            this.distance
-        } ${this.stroke.common}`;
+        return `${
+            this.gender === "f"
+                ? "Girls"
+                : this.gender === "m"
+                ? "Boys"
+                : "Mixed"
+        } ${this.ageGroup} ${this.distance} ${this.stroke.common}`;
     }
 }
 

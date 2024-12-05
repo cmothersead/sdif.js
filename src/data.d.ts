@@ -1,6 +1,6 @@
 import { Stroke } from "./swims";
 
-export type Gender = "m" | "f";
+export type Gender = "m" | "f" | "x";
 export type CourseChar = "y" | "s" | "m";
 export type RoundTypeChar = "p" | "s" | "f" | "o" | "t";
 

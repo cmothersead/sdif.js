@@ -111,6 +111,21 @@ describe("Event.toString()", () => {
             }).toString()
         ).toBe("Boys 15 & Over 100 Breast");
     });
+
+    test("15 & Over Mixed 1650 Free", () => {
+        expect(
+            new Event({
+                number: 3,
+                letter: "",
+                distance: 1650,
+                stroke: "Fr",
+                gender: "x",
+                minAge: 15,
+                maxAge: 100,
+                isRelay: false,
+            }).toString()
+        ).toBe("Mixed 15 & Over 1650 Free");
+    });
 });
 
 describe("Event constructor", () => {
