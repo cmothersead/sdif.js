@@ -1,6 +1,6 @@
 import { Stroke } from "./swims";
 
-export type Gender = "m" | "f" | "x";
+export type GenderChar = "m" | "f" | "x";
 export type CourseChar = "y" | "s" | "m";
 export type RoundTypeChar = "p" | "s" | "f" | "o" | "t";
 
@@ -30,7 +30,7 @@ export type SwimmerData = {
     prefName?: string;
     middleName?: string;
     lastName: string;
-    gender: Gender;
+    gender: GenderChar;
     birthday: string | Date;
 };
 
@@ -62,7 +62,7 @@ export type EventData = {
     letter?: string;
     distance: number;
     stroke: string | Stroke;
-    gender: string | Gender;
+    gender: GenderChar;
     minAge: number;
     maxAge: number;
     isRelay: boolean;

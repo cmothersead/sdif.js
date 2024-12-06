@@ -20,7 +20,7 @@ describe("AgeGroup.toString()", () => {
 });
 
 describe("Event.toString()", () => {
-    test("10 & Under Boys 100 Free", () => {
+    test("Boys 10 & Under 100 Free", () => {
         expect(
             new Event({
                 number: 1,
@@ -35,7 +35,7 @@ describe("Event.toString()", () => {
         ).toBe("Boys 10 & Under 100 Free");
     });
 
-    test("11-12 Girls 200 IM", () => {
+    test("Girls 11-12 200 IM", () => {
         expect(
             new Event({
                 number: 2,
@@ -50,7 +50,7 @@ describe("Event.toString()", () => {
         ).toBe("Girls 11-12 200 IM");
     });
 
-    test("11-12 Girls 200 Medley Relay", () => {
+    test("Girls 11-12 200 Medley Relay", () => {
         expect(
             new Event({
                 number: 2,
@@ -97,7 +97,7 @@ describe("Event.toString()", () => {
         );
     });
 
-    test("15 & Over Boys 100 Breast", () => {
+    test("Boys 15 & Over 100 Breast", () => {
         expect(
             new Event({
                 number: 3,
@@ -112,7 +112,7 @@ describe("Event.toString()", () => {
         ).toBe("Boys 15 & Over 100 Breast");
     });
 
-    test("15 & Over Mixed 1650 Free", () => {
+    test("Mixed 15 & Over 1650 Free", () => {
         expect(
             new Event({
                 number: 3,
@@ -125,6 +125,36 @@ describe("Event.toString()", () => {
                 isRelay: false,
             }).toString()
         ).toBe("Mixed 15 & Over 1650 Free");
+    });
+
+    test("Boys 15o 1650 Free", () => {
+        expect(
+            new Event({
+                number: 3,
+                letter: "",
+                distance: 1650,
+                stroke: "Fr",
+                gender: "m",
+                minAge: 15,
+                maxAge: 100,
+                isRelay: false,
+            }).toString({ ageGroup: "abbr" })
+        ).toBe("Boys 15o 1650 Free");
+    });
+
+    test("Girls 10u 100 Backstroke", () => {
+        expect(
+            new Event({
+                number: 3,
+                letter: "",
+                distance: 100,
+                stroke: "bk",
+                gender: "f",
+                minAge: 0,
+                maxAge: 10,
+                isRelay: false,
+            }).toString({ ageGroup: "abbr", stroke: "full" })
+        ).toBe("Girls 10u 100 Backstroke");
     });
 });
 

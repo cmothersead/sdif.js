@@ -2,7 +2,7 @@ import {
     EntryData,
     EventData,
     FacilityData,
-    Gender,
+    GenderChar,
     MeetData,
     ResultData,
     RoundData,
@@ -75,6 +75,8 @@ const STROKES = {
         },
     },
 } as const;
+export type StrokeOptions =
+    keyof (typeof STROKES)[keyof typeof STROKES][keyof (typeof STROKES)[keyof typeof STROKES]];
 
 export class Stroke {
     abbr: string;
@@ -130,8 +132,8 @@ export class Stroke {
         }
     }
 
-    toString() {
-        return this.common;
+    toString(options?: StrokeOptions) {
+        return this[options ?? "common"];
     }
 }
 
@@ -186,7 +188,11 @@ export class Course {
     }
 }
 
+export type AgeGroupOptions = "abbr" | "full";
+
 export class AgeGroup {
+    static MIN = 0;
+    static MAX = 100;
     minAge: number;
     maxAge: number;
 
@@ -195,12 +201,14 @@ export class AgeGroup {
         this.maxAge = maxAge;
     }
 
-    toString() {
-        if (this.minAge > 0 && this.maxAge < 100) {
+    toString(options?: AgeGroupOptions) {
+        if (options === "abbr") {
+            return this.abbr();
+        } else if (this.minAge > AgeGroup.MIN && this.maxAge < AgeGroup.MAX) {
             return `${this.minAge}-${this.maxAge}`;
-        } else if (this.minAge <= 0 && this.maxAge < 100) {
+        } else if (this.minAge <= AgeGroup.MIN && this.maxAge < AgeGroup.MAX) {
             return `${this.maxAge} & Under`;
-        } else if (this.minAge > 0 && this.maxAge >= 100) {
+        } else if (this.minAge > AgeGroup.MIN && this.maxAge >= AgeGroup.MAX) {
             return `${this.minAge} & Over`;
         } else {
             return `Open`;
@@ -208,15 +216,55 @@ export class AgeGroup {
     }
 
     abbr() {
-        if (this.minAge > 0 && this.maxAge < 100) {
+        if (this.minAge > AgeGroup.MIN && this.maxAge < AgeGroup.MAX) {
             return `${this.minAge}-${this.maxAge}`;
-        } else if (this.minAge <= 0 && this.maxAge < 100) {
+        } else if (this.minAge <= AgeGroup.MIN && this.maxAge < AgeGroup.MAX) {
             return `${this.maxAge}u`;
-        } else if (this.minAge > 0 && this.maxAge >= 100) {
+        } else if (this.minAge > AgeGroup.MIN && this.maxAge >= AgeGroup.MAX) {
             return `${this.minAge}o`;
         } else {
-            return `open`;
+            return `Open`;
         }
+    }
+}
+
+const GENDERS = {
+    m: {
+        char: "m",
+        mf: "Male",
+        mw: "Mens",
+        bg: "Boys",
+    },
+    f: {
+        char: "f",
+        mf: "Female",
+        mw: "Womens",
+        bg: "Girls",
+    },
+    x: {
+        char: "x",
+        mf: "Mixed",
+        mw: "Mixed",
+        bg: "Mixed",
+    },
+} as const;
+export type GenderOptions = keyof (typeof GENDERS)[keyof typeof GENDERS];
+
+export class Gender {
+    char: keyof typeof GENDERS;
+    mf: (typeof GENDERS)[keyof typeof GENDERS]["mf"];
+    mw: (typeof GENDERS)[keyof typeof GENDERS]["mw"];
+    bg: (typeof GENDERS)[keyof typeof GENDERS]["bg"];
+
+    constructor(value: keyof typeof GENDERS) {
+        this.char = value;
+        this.mf = GENDERS[value].mf;
+        this.mw = GENDERS[value].mw;
+        this.bg = GENDERS[value].bg;
+    }
+
+    toString(options?: GenderOptions) {
+        return this[options ?? "bg"];
     }
 }
 
@@ -253,19 +301,21 @@ export class Event {
         this.letter = letter;
         this.distance = distance;
         this.stroke = new Stroke(stroke, isRelay);
-        this.gender = gender.toLowerCase() as (typeof genders)[number];
+        this.gender = new Gender(gender);
         this.ageGroup = new AgeGroup(minAge, maxAge);
         this.isRelay = isRelay;
     }
 
-    toString() {
-        return `${
-            this.gender === "f"
-                ? "Girls"
-                : this.gender === "m"
-                ? "Boys"
-                : "Mixed"
-        } ${this.ageGroup} ${this.distance} ${this.stroke.common}`;
+    toString(options?: {
+        gender?: GenderOptions;
+        ageGroup?: "abbr" | "full";
+        stroke?: StrokeOptions;
+    }) {
+        return `${this.gender.toString(
+            options?.gender
+        )} ${this.ageGroup.toString(options?.ageGroup)} ${
+            this.distance
+        } ${this.stroke.toString(options?.stroke)}`;
     }
 }
 
@@ -301,7 +351,7 @@ export class Swimmer {
     middleName?: string;
     lastName: string;
     birthday: Date;
-    gender: Gender;
+    gender: GenderChar;
     age: number;
     team: Team;
 
