@@ -290,7 +290,9 @@ export class Event {
         isRelay,
     }: EventData) {
         if (!Number.isInteger(distance)) {
-            throw new Error(`Invalid distance value: "${distance}"`);
+            throw new Error(
+                `Invalid distance value: "${distance}" for event: ${number}${letter}`
+            );
         }
         const genders = ["m", "f", "x"] as const;
         if (!genders.some((val) => gender.toLowerCase() === val)) {
